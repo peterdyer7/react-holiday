@@ -65,7 +65,7 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 4
+        : Day 5
       </h1>
       <Suspense fallback={<div>...loading</div>}>
         <PokemonList handleClick={setSelected} />
