@@ -4,19 +4,6 @@ import ErrorBoundary from './ErrorBoundary';
 import PokemonList from './PokemonList';
 import PokemonDetail from './PokemonDetail';
 
-function PokemonItem({ name, url, className, ...props }) {
-  return (
-    <h1 {...props} className={['pokemon-item', className].join(' ')}>
-      {name}, {url}
-    </h1>
-  );
-}
-
-const pokemon = {
-  name: 'bulbasaur',
-  url: 'https://pokeapi.co/api/v2/pokemon/1/'
-};
-
 function App() {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1);
   return (
@@ -27,18 +14,15 @@ function App() {
         </span>
         : Day 8
       </h1>
-      <PokemonItem id="some-id" className="app-pokemon" {...pokemon}>
-        The Pokemon
-      </PokemonItem>
-      {/* <strong>selected pokemon id: {selectedPokemonId}</strong>
+      <strong>selected pokemon id: {selectedPokemonId}</strong>
       <ErrorBoundary fallback={<div>Oops!</div>}>
-        <Suspense fallback={<div>...loading</div>}>
-          <PokemonDetail
-            url={`https://pokeapi.co/api/v2/pokemon/${selectedPokemonId}/`}
-          />
+        <Suspense maxDuration={0} fallback={<div>...loading detail</div>}>
+          <PokemonDetail resourceId={selectedPokemonId} />
+        </Suspense>
+        <Suspense maxDuration={300} fallback={<div>...loading list</div>}>
           <PokemonList onSelect={(id) => setSelectedPokemonId(id)} />
         </Suspense>
-      </ErrorBoundary> */}
+      </ErrorBoundary>
     </div>
   );
 }
