@@ -12,7 +12,7 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 8
+        : Day 9
       </h1>
       <strong>selected pokemon id: {selectedPokemonId}</strong>
       <ErrorBoundary fallback={<div>Oops!</div>}>
