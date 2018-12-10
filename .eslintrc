@@ -1,0 +1,6 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "heading-has-content": [0]
+  }
+}
