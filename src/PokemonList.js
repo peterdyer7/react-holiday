@@ -1,24 +1,17 @@
 import React from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
 
-import PokemonListItem from './PokemonListItem';
-
 const PokemonCollectionResource = createResource(async () => {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon/');
   return await res.json();
 });
 
-function PokemonList({ onSelect }) {
+function PokemonList({ renderItem }) {
   return (
     <ul>
-      {PokemonCollectionResource.read().results.map((pokemon) => (
-        <PokemonListItem
-          onClick={() => onSelect(pokemon.url.split('/')[6])}
-          key={pokemon.url}
-        >
-          {pokemon.name}
-        </PokemonListItem>
-      ))}
+      {PokemonCollectionResource.read().results.map((pokemon) =>
+        renderItem({ id: pokemon.url.split('/')[6], ...pokemon })
+      )}
     </ul>
   );
 }
