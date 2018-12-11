@@ -1,4 +1,3 @@
-import React from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
 
 const PokemonCollectionResource = createResource(async () => {
@@ -7,12 +6,8 @@ const PokemonCollectionResource = createResource(async () => {
 });
 
 function PokemonList({ renderItem }) {
-  return (
-    <ul>
-      {PokemonCollectionResource.read().results.map((pokemon) =>
-        renderItem({ id: pokemon.url.split('/')[6], ...pokemon })
-      )}
-    </ul>
+  return PokemonCollectionResource.read().results.map((pokemon) =>
+    renderItem({ id: pokemon.url.split('/')[6], ...pokemon })
   );
 }
 
