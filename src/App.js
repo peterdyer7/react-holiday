@@ -1,10 +1,16 @@
 import React, { Suspense, useState } from 'react';
 
 import ErrorBoundary from './ErrorBoundary';
-import PokemonList from './PokemonList';
-import PokemonDetail from './PokemonDetail';
-import PokemonListItem from './PokemonListItem';
-import PokemonDetailItem from './PokemonDetailItem';
+
+import {
+  PokemonList,
+  PokemonDetail,
+  PokemonListItem,
+  PokemonDetailItem,
+  PokemonError,
+  PokemonListLoading,
+  PokemonDetailLoading
+} from './pokemon';
 
 function App() {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1);
@@ -14,16 +20,16 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 11
+        : Day 12
       </h1>
-      <ErrorBoundary fallback={<div>Oops!</div>}>
-        <Suspense maxDuration={0} fallback={<div>...loading detail</div>}>
+      <ErrorBoundary fallback={PokemonError}>
+        <Suspense maxDuration={0} fallback={PokemonDetailLoading}>
           <PokemonDetail
             pokemonId={selectedPokemonId}
             render={(pokemon) => <PokemonDetailItem pokemon={pokemon} />}
           />
         </Suspense>
-        <Suspense maxDuration={300} fallback={<div>...loading list</div>}>
+        <Suspense maxDuration={300} fallback={PokemonListLoading}>
           <ul>
             <PokemonList
               renderItem={(pokemon) => (
