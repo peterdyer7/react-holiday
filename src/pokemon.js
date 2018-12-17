@@ -14,8 +14,8 @@ export function PokemonList({ renderItem }) {
 }
 
 const PokemonDetailResource = createResource(async (id) => {
-  await sleep(500);
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+  await sleep(500);
   return res.json();
 });
 

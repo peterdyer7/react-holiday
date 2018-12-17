@@ -20,16 +20,16 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 13
+        : Day 14
       </h1>
       <ErrorBoundary fallback={PokemonError}>
-        <Suspense maxDuration={1000} fallback={<PokemonDetailLoading />}>
+        <Suspense maxDuration={10000} fallback={<PokemonDetailLoading />}>
           <PokemonDetail
             pokemonId={selectedPokemonId}
             render={(pokemon) => <PokemonDetailItem pokemon={pokemon} />}
           />
         </Suspense>
-        <Suspense maxDuration={500} fallback={<PokemonListLoading />}>
+        <Suspense maxDuration={2000} fallback={<PokemonListLoading />}>
           <ul>
             <PokemonList
               renderItem={(pokemon) => (
