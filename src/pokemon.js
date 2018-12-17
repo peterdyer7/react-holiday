@@ -1,16 +1,21 @@
 import React from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
-import sleep from 'sleep-promise';
+// import sleep from 'sleep-promise';
 
 const PokemonCollectionResource = createResource(async () => {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon/');
-  return await res.json();
+  const result = await res.json();
+  return {
+    ...result,
+    results: result.results.map((pokemon) => ({
+      id: pokemon.url.split('/')[6],
+      ...pokemon
+    }))
+  };
 });
 
 export function PokemonList({ renderItem }) {
-  return PokemonCollectionResource.read().results.map((pokemon) =>
-    renderItem({ id: pokemon.url.split('/')[6], ...pokemon })
-  );
+  return PokemonCollectionResource.read().results.map(renderItem);
 }
 
 const PokemonDetailResource = createResource(async (id) => {
