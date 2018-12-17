@@ -15,7 +15,7 @@ export function PokemonList({ renderItem }) {
 
 const PokemonDetailResource = createResource(async (id) => {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-  await sleep(500);
+  // await sleep(500);
   return res.json();
 });
 
@@ -39,13 +39,75 @@ export function PokemonListItem({
 export function PokemonDetailItem({ pokemon }) {
   return (
     <article style={{ border: '1px solid' }}>
-      <strong>selected pokemon id: {pokemon.id}</strong>
-      <br />
-      Name: {pokemon.name}
-      <br />
-      Height: {pokemon.height}
-      <br />
-      Weight: {pokemon.weight}
+      <section>
+        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      </section>
+      <section>
+        <h1>{pokemon.name}</h1>
+      </section>
+      <section>
+        <dl>
+          <dt>Height:</dt>
+          <dd>{pokemon.height}</dd>
+          <dt>Weight:</dt>
+          <dd>{pokemon.weight}</dd>
+          <dt>Abilities:</dt>
+          <dd>
+            <ul>
+              {pokemon.abilities.map(({ ability }) => (
+                <li>{ability.name}</li>
+              ))}
+            </ul>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h2>Types</h2>
+        <ul>
+          {pokemon.types.map(({ type }) => (
+            <li>{type.name}</li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <h2>Stats</h2>
+        <table
+          style={{
+            borderCollapse: 'collapse'
+          }}
+        >
+          <tbody>
+            <tr>
+              {pokemon.stats.map(({ base_stat }) => (
+                <td
+                  style={{
+                    border: '1px solid black',
+                    padding: '5px',
+                    textAlign: 'center'
+                  }}
+                >
+                  {base_stat}
+                </td>
+              ))}
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              {pokemon.stats.map(({ stat }) => (
+                <th
+                  style={{
+                    border: '1px solid black',
+                    padding: '5px',
+                    textAlign: 'center'
+                  }}
+                >
+                  {stat.name}
+                </th>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
+      </section>
     </article>
   );
 }
