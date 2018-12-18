@@ -43,7 +43,7 @@ export function PokemonListItem({
 
 export function PokemonDetailItem({ pokemon }) {
   return (
-    <article style={{ border: '1px solid' }}>
+    <article>
       <section>
         <img src={pokemon.sprites.front_default} alt={pokemon.name} />
       </section>
