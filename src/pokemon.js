@@ -41,11 +41,24 @@ export function PokemonListItem({
   );
 }
 
+const ImageResource = createResource(
+  (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(src);
+      img.src = src;
+    })
+);
+
+function Img({ src, alt, ...rest }) {
+  return <img src={ImageResource.read(src)} alt={alt} {...rest} />;
+}
+
 export function PokemonDetailItem({ pokemon }) {
   return (
     <article>
       <section>
-        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <Img src={pokemon.sprites.front_default} alt={pokemon.name} />
       </section>
       <section>
         <h1>{pokemon.name}</h1>
@@ -60,7 +73,7 @@ export function PokemonDetailItem({ pokemon }) {
           <dd>
             <ul>
               {pokemon.abilities.map(({ ability }) => (
-                <li>{ability.name}</li>
+                <li key={ability.name}>{ability.name}</li>
               ))}
             </ul>
           </dd>
@@ -70,7 +83,7 @@ export function PokemonDetailItem({ pokemon }) {
         <h2>Types</h2>
         <ul>
           {pokemon.types.map(({ type }) => (
-            <li>{type.name}</li>
+            <li key={type.name}>{type.name}</li>
           ))}
         </ul>
       </section>
@@ -83,13 +96,14 @@ export function PokemonDetailItem({ pokemon }) {
         >
           <tbody>
             <tr>
-              {pokemon.stats.map(({ base_stat }) => (
+              {pokemon.stats.map(({ base_stat, stat }) => (
                 <td
                   style={{
                     border: '1px solid black',
                     padding: '5px',
                     textAlign: 'center'
                   }}
+                  key={stat.name}
                 >
                   {base_stat}
                 </td>
@@ -105,6 +119,7 @@ export function PokemonDetailItem({ pokemon }) {
                     padding: '5px',
                     textAlign: 'center'
                   }}
+                  key={stat.name}
                 >
                   {stat.name}
                 </th>
