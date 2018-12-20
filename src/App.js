@@ -20,11 +20,11 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 18
+        : Day 19
       </h1>
       <ErrorBoundary fallback={PokemonError}>
         {selectedPokemonId > 0 ? (
-          <Suspense maxDuration={5000} fallback={<PokemonDetailLoading />}>
+          <Suspense maxDuration={1000} fallback={<PokemonDetailLoading />}>
             <button type="button" onClick={() => setSelectedPokemonId(0)}>
               {`< `}Back
             </button>

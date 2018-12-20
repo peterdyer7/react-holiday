@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
 // import sleep from 'sleep-promise';
 
@@ -58,7 +58,9 @@ export function PokemonDetailItem({ pokemon }) {
   return (
     <article>
       <section>
-        <Img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <Suspense maxDuration={500} fallback="image loading...">
+          <Img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        </Suspense>
       </section>
       <section>
         <h1>{pokemon.name}</h1>
