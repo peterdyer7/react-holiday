@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 
 import ErrorBoundary from './ErrorBoundary';
 
@@ -13,15 +13,22 @@ import {
 } from './pokemon';
 
 function App() {
-  const [selectedPokemonId, setSelectedPokemonId] = useState(0);
+  const [selectedPokemonId, setSelectedPokemonId] = useState(4);
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    document.addEventListener('resize', setWidth(window.innerWidth));
+  });
+
   return (
     <div>
       <h1>
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 19
+        : Day 20
       </h1>
+      <strong>window width: {width}</strong>
+      <br />
       <ErrorBoundary fallback={PokemonError}>
         {selectedPokemonId > 0 ? (
           <Suspense maxDuration={1000} fallback={<PokemonDetailLoading />}>
