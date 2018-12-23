@@ -16,7 +16,10 @@ function App() {
   const [selectedPokemonId, setSelectedPokemonId] = useState(4);
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
-    document.addEventListener('resize', setWidth(window.innerWidth));
+    const handleRezise = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleRezise);
+
+    return () => window.removeEventListener('resize', handleRezise);
   });
 
   return (
@@ -25,7 +28,7 @@ function App() {
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 20
+        : Day 21
       </h1>
       <strong>window width: {width}</strong>
       <br />
