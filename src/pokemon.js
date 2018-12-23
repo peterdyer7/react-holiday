@@ -55,6 +55,31 @@ function Img({ src, alt, ...rest }) {
 }
 
 export function PokemonDetailItem({ pokemon }) {
+  function TypeItem({ style, ...props }) {
+    return (
+      <li
+        style={{
+          backgroundColor: 'grey',
+          display: 'inline-flex',
+          marginRight: '.25em',
+          borderRadius: '.25em',
+          padding: '.5em 1em',
+          color: 'white',
+          ...style
+        }}
+        {...props}
+      />
+    );
+  }
+
+  function GrassTypeItem(props) {
+    return <TypeItem style={{ backgroundColor: 'green' }} {...props} />;
+  }
+
+  function PoisonTypeItem(props) {
+    return <TypeItem style={{ backgroundColor: 'purple' }} {...props} />;
+  }
+
   return (
     <article>
       <section>
@@ -84,9 +109,20 @@ export function PokemonDetailItem({ pokemon }) {
       <section>
         <h2>Types</h2>
         <ul>
-          {pokemon.types.map(({ type }) => (
-            <li key={type.name}>{type.name}</li>
-          ))}
+          {pokemon.types.map(({ type }) => {
+            switch (type.name) {
+              case 'grass':
+                return (
+                  <GrassTypeItem key={type.name}>{type.name}</GrassTypeItem>
+                );
+              case 'poison':
+                return (
+                  <PoisonTypeItem key={type.name}>{type.name}</PoisonTypeItem>
+                );
+              default:
+                return <TypeItem key={type.name}>{type.name}</TypeItem>;
+            }
+          })}
         </ul>
       </section>
       <section>
