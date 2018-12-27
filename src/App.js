@@ -12,9 +12,8 @@ import {
   PokemonDetailLoading
 } from './pokemon';
 
-function App() {
-  const [selectedPokemonId, setSelectedPokemonId] = useState(1);
-  const [width, setWidth] = useState(window.innerWidth);
+function useWindowWidth(initialWidth = window.innerWidth) {
+  const [width, setWidth] = useState(initialWidth);
   useEffect(() => {
     const handleRezise = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleRezise);
@@ -22,13 +21,20 @@ function App() {
     return () => window.removeEventListener('resize', handleRezise);
   });
 
+  return width;
+}
+
+function App() {
+  const [selectedPokemonId, setSelectedPokemonId] = useState(1);
+  const width = useWindowWidth();
+
   return (
     <div>
       <h1>
         <span role="img" aria-label="React Holiday Two">
           ⚛️🎄✌️
         </span>
-        : Day 22
+        : Day 23
       </h1>
       <strong>window width: {width}</strong>
       <br />
