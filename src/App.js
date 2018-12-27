@@ -12,6 +12,8 @@ import {
   PokemonDetailLoading
 } from './pokemon';
 
+import WindowWidthContext from './window-width-context';
+
 function useWindowWidth(initialWidth = window.innerWidth) {
   const [width, setWidth] = useState(initialWidth);
   useEffect(() => {
@@ -26,47 +28,49 @@ function useWindowWidth(initialWidth = window.innerWidth) {
 
 function App() {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1);
+
   const width = useWindowWidth();
 
   return (
-    <div>
-      <h1>
-        <span role="img" aria-label="React Holiday Two">
-          ⚛️🎄✌️
-        </span>
-        : Day 23
-      </h1>
-      <strong>window width: {width}</strong>
-      <br />
-      <ErrorBoundary fallback={PokemonError}>
-        {selectedPokemonId > 0 ? (
-          <Suspense maxDuration={1000} fallback={<PokemonDetailLoading />}>
-            <button type="button" onClick={() => setSelectedPokemonId(0)}>
-              {`< `}Back
-            </button>
-            <PokemonDetail
-              pokemonId={selectedPokemonId}
-              render={(pokemon) => <PokemonDetailItem pokemon={pokemon} />}
-            />
-          </Suspense>
-        ) : (
-          <Suspense maxDuration={2000} fallback={<PokemonListLoading />}>
-            <ul>
-              <PokemonList
-                renderItem={(pokemon) => (
-                  <PokemonListItem
-                    key={pokemon.id}
-                    onClick={() => setSelectedPokemonId(pokemon.id)}
-                  >
-                    {pokemon.name}
-                  </PokemonListItem>
-                )}
+    <WindowWidthContext.Provider value={width}>
+      <div>
+        <h1>
+          <span role="img" aria-label="React Holiday Two">
+            ⚛️🎄✌️
+          </span>
+          : Day 24
+        </h1>
+        <br />
+        <ErrorBoundary fallback={PokemonError}>
+          {selectedPokemonId > 0 ? (
+            <Suspense maxDuration={1000} fallback={<PokemonDetailLoading />}>
+              <button type="button" onClick={() => setSelectedPokemonId(0)}>
+                {`< `}Back
+              </button>
+              <PokemonDetail
+                pokemonId={selectedPokemonId}
+                render={(pokemon) => <PokemonDetailItem pokemon={pokemon} />}
               />
-            </ul>
-          </Suspense>
-        )}
-      </ErrorBoundary>
-    </div>
+            </Suspense>
+          ) : (
+            <Suspense maxDuration={2000} fallback={<PokemonListLoading />}>
+              <ul>
+                <PokemonList
+                  renderItem={(pokemon) => (
+                    <PokemonListItem
+                      key={pokemon.id}
+                      onClick={() => setSelectedPokemonId(pokemon.id)}
+                    >
+                      {pokemon.name}
+                    </PokemonListItem>
+                  )}
+                />
+              </ul>
+            </Suspense>
+          )}
+        </ErrorBoundary>
+      </div>
+    </WindowWidthContext.Provider>
   );
 }
 

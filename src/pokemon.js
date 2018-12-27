@@ -1,6 +1,7 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useContext } from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
 // import sleep from 'sleep-promise';
+import WindowWidthContext from './window-width-context';
 
 const PokemonCollectionResource = createResource(async () => {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon/');
@@ -55,6 +56,8 @@ function Img({ src, alt, ...rest }) {
 }
 
 export function PokemonDetailItem({ pokemon }) {
+  const width = useContext(WindowWidthContext);
+
   function TypeItem({ style, ...props }) {
     return (
       <li
@@ -82,6 +85,7 @@ export function PokemonDetailItem({ pokemon }) {
 
   return (
     <article>
+      <strong>window width: {width}</strong>
       <section>
         <Suspense maxDuration={500} fallback="image loading...">
           <Img src={pokemon.sprites.front_default} alt={pokemon.name} />
